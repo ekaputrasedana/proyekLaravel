@@ -50,36 +50,33 @@
                 <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-6">
                     <div class="col-lg-6 px-xl-10">
                         <h3 class="h2 text-black mb-0">FORMULIR DATA DIRI</h3><br>
-                        <?php
-            
-                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                        $firstName = $_POST['inputFirstName'];
-                        $lastName = $_POST['inputLastName'];
-                        $address = $_POST['inputAddress'];
-                        $dateOfBirth = $_POST['inputDateOfBirth'];
-                        $email = $_POST['inputEmail'];
-                        $gender = $_POST['inputGender'];
-                        $religion = $_POST['inputReligion'];
-                        $status = $_POST['inputState'];
-                        $job = isset($_POST['inputjob']) ? $_POST['inputjob'] : [];
-                        $terms = isset($_POST['inputPersonalTerms']) ? 'Yes' : 'No';
-
-                        echo '<table class="table">';
-                        echo '<tr><td><strong>First Name:</strong></td><td>' . $firstName . '</td></tr>';
-                        echo '<tr><td><strong>Last Name:</strong></td><td>' . $lastName . '</td></tr>';
-                        echo '<tr><td><strong>Address:</strong></td><td>' . $address . '</td></tr>';
-                        echo '<tr><td><strong>Date of Birth:</strong></td><td>' . $dateOfBirth . '</td></tr>';
-                        echo '<tr><td><strong>Email:</strong></td><td>' . $email . '</td></tr>';
-                        echo '<tr><td><strong>Gender:</strong></td><td>' . $gender . '</td></tr>';
-                        echo '<tr><td><strong>Religion:</strong></td><td>' . $religion . '</td></tr>';
-                        echo '<tr><td><strong>Status:</strong></td><td>' . $status . '</td></tr>';
-                        echo '<tr><td><strong>Current Job:</strong></td><td>' . $job . '</td></tr>';
-                        echo '<tr><td><strong>Terms:</strong></td><td>' . $terms . '</td></tr>';
-                        echo '</table>';                            
-                        } else {
-                        echo "<p>No data submitted.</p>";
-                        }
-                        ?>
+                        <table class="table table-white">
+                            <thead>
+                                <tr>
+                                    <th class="text center">No</th>
+                                    <th class="text center">First Name</th>
+                                    <th class="text center">Email</th>
+                                    <th class="text center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text center">
+                                @foreach ($data as $person)
+                                    <tr>
+                                        <th>{{  $loop->iteration }}</th>
+                                        <td>{{  $person->firstName }}</td>
+                                        <td>{{  $person->email }}</td>
+                                        <td>
+                                            <form action="DetailPersonData/{{ $person->id }}" method="GET" class="d-inline"><button class="btn btn-primary btn-sm">Detail</button>
+                                            </form>
+                                            <form action="Person/{{ $person->id }}" method="GET" class="d-inline"><button class="btn btn-primary btn-sm">Detail</button>
+                                            </form>
+                                            <form action="DetailPersonData/{{ $person->id }}" method="GET" class="d-inline"><button class="btn btn-primary btn-sm">Detail</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

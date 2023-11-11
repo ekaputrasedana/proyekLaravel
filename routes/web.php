@@ -31,6 +31,13 @@ Route::get('/HasilForm', function () {
 });
 
 
-Route::post('/HasilForm', [ResourceController::class, 'store']);
+
+Route::get('/BiodataForm', [FormulirController::class, 'create'])->name('Person Biodata Form');
+Route::post('/BiodataForm', [FormulirController::class, 'store'])->name('Store Person Biodata');
+Route::get('/ListData', [FormulirController::class, 'index'])->name('Person Data List');
+Route::get('/DetailData/{id}', [FormulirController::class, 'show'])->name('Show Person Data');
+Route::get('/StudentData/{id}/edit', [FormulirController::class, 'edit'])->name('Edit Person Data');
+Route::put('/UpdateStudentData/{id}', [FormulirController::class, 'update'])->name('Update Person Data');
+Route::delete('/DeleteStudentData/{id}', [FormulirController::class, 'destroy'])->name('Delete Person Data');
 
 //Route::resource('/ResourceController', ResourceController::class);

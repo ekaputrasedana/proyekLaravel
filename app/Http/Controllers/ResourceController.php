@@ -12,7 +12,9 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        return view("HasilForm");
+        $data = \App\Models\formulir::all();
+
+        return view("HasilForm", compact("data"));
     }
 
     /**
@@ -20,7 +22,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        //
+        return view("Form");
     }
 
     /**
@@ -28,36 +30,37 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        $firstName = $request->input('first-name');
-        $lastName = $request->input('last-name');
-        $address = $request->input('address');
-        $dateOfBirth = $request->input('date-of-birth');
-        $email = $request->input('email');
-        $gender = $request->input('gender');
-        $religion = $request->input('religion');
-        $status = $request->input('status');
-        $job = $request->input('job');
-        $terms = $request->input('terms');
-
-        return view('HasilForm', [
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'address' => $address,
-            'dateOfBirth' => $dateOfBirth,
-            'email' => $email,
-            'gender' => $gender,
-            'status' => $status,
-            'job' => $job,
-            'terms' => $terms
-        ]);
-    }
+        {
+            $formulir = new \App\Models\formulir();
+            $formulir->firstname = $request->firstName;
+            $formulir->lastName = $request->lastName;
+            $formulir->address = $request->address;
+            $formulir->dateOfBirth = $request->dateOfBirth;
+            $formulir->email = $request->email;
+            $formulir->gender = $request->gender;
+            $formulir->religion = $request->religion;
+            $formulir->status = $request->status;
+            $formulir->job = $request->job;
+            $formulir->terms = $request->terms;
+            $formulir->save();
+    
+            return redirect('HasilForm');
+    
+        }
+    }   
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $data = \App\Models\formulir::find($id);
+
+        if ($data) {
+            return view('detail', compact('data'));
+        } else {
+        return abort(404);
+        }
     }
 
     /**
@@ -65,7 +68,16 @@ class ResourceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = \App\Models\formulir::find($id);
+
+        if ($data) {
+            return view('editform', compact('data'));
+        } else {
+        return abort(404);
+        }
+        
+
+
     }
 
     /**
@@ -73,7 +85,26 @@ class ResourceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = \App\Models\formulir::find($id);
+
+        if (!$data) {
+            return abort(404);
+         
+        }
+        
+            $data->firstname = $request->input('firstName');
+            $data->lastName = $request->input('lastName');
+            $data->address = $request->input('address');
+            $data->dateOfBirth = $request->input('dateOfBirth');
+            $data->email = $request->input('email');
+            $data->gender = $request->input('gender');
+            $data->religion = $request->input('religion');
+            $data->status = $request->input('status');
+            $data->job = $request->input('job');
+            $data->terms = $request->input('terms');
+            $data->save();
+    
+            return redirect('HasilForm');
     }
 
     /**
@@ -81,6 +112,16 @@ class ResourceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = \App\Models\formulir::find($id);
+
+        if (!$data) {
+            return abort(404); // Jika data tidak ditemukan, kembalikan respons 404
+        }
+
+        // Hapus data
+        $data->delete();
+
+        return redirect('HasilForm');
     }
+    
 }
