@@ -44,39 +44,7 @@
                 <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-6">
                     <div class="col-lg-6 px-xl-10">
                         <h3 class="h2 text-black mb-0">DELETE DATA</h3><br>
-                        <?php
-                        include 'koneksidb.php';
-
-                        if (isset($_GET['id'])) {
-                            $id = $_GET['id'];
-
-                            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm']) && $_POST['confirm'] == 'Yes') {
-                                // Proses penghapusan data
-                                $sql = "DELETE FROM data_formulir WHERE id = $id";
-
-                                if ($conn->query($sql) === TRUE) {
-                                    echo "Data berhasil dihapus.";
-                                    echo '<script>window.location = "tabeldata.php";</script>';
-                                } else {
-                                    echo "Error: " . $sql . "<br>" . $conn->error;
-                                }
-                            } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm']) && $_POST['confirm'] == 'No') {
-                                // Jika pengguna memilih "No", arahkan kembali ke tabeldata.php
-                                echo '<script>window.location = "tabeldata.php";</script>';
-                            } else {
-                                // Menampilkan konfirmasi
-                                echo '<p>Apakah Anda yakin ingin menghapus data ini?</p>';
-                                echo '<form method="POST">';
-                                echo '<input type="submit" name="confirm" value="Yes" class="btn btn-danger"> ';
-                                echo '<input type="submit" name="confirm" value="No" class="btn btn-primary">';
-                                echo '</form>';
-                            }
-                        } else {
-                            echo "<p>Invalid request.</p>";
-                        }
-
-                        $conn->close();
-                        ?>
+                        
                     </div>
                 </div>
             </div>

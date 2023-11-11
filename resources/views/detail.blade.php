@@ -44,39 +44,64 @@
                 <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-6">
                     <div class="col-lg-6 px-xl-10">
                         <h3 class="h2 text-black mb-0">DETAIL DATA</h3><br>
-                        <?php
-                        include 'koneksidb.php';
-
-                        if (isset($_GET['id'])) {
-                            $id = $_GET['id'];
-                            $sql = "SELECT * FROM data_formulir WHERE id = $id";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                $row = $result->fetch_assoc();
-                                echo '<table class="table">';
-                                echo '<tr><td><strong>First Name:</strong></td><td>' . $row['First_Name'] . '</td></tr>';
-                                echo '<tr><td><strong>Last Name:</strong></td><td>' . $row['Last_Name'] . '</td></tr>';
-                                echo '<tr><td><strong>Address:</strong></td><td>' . $row['Address'] . '</td></tr>';
-                                echo '<tr><td><strong>Date Of Birth:</strong></td><td>' . $row['Date_Of_Birth'] . '</td></tr>';
-                                echo '<tr><td><strong>Email:</strong></td><td>' . $row['Email'] . '</td></tr>';
-                                echo '<tr><td><strong>Gender:</strong></td><td>' . $row['Gender'] . '</td></tr>';
-                                echo '<tr><td><strong>Religion:</strong></td><td>' . $row['Religion'] . '</td></tr>';
-                                echo '<tr><td><strong>Status:</strong></td><td>' . $row['Status'] . '</td></tr>';
-                                echo '<tr><td><strong>Current Job:</strong></td><td>' . $row['Current_Job'] . '</td></tr>';
-                                echo '<tr><td><strong>Terms:</strong></td><td>' . $row['Terms'] . '</td></tr>';
-                                echo '</table>';
-                            } else {
-                                echo "<p>Data not found.</p>";
-                            }
-                        } else {
-                            echo "<p>Invalid request.</p>";
-                        }
-
-                        $conn->close();
-                        ?>
-
-                        <a href="tabeldata.php" class="btn btn-danger">Kembali</a>
+                        <div class="row justify-content-center mb-5">
+                            <div class="col-md-50">
+                                <div class="container mt-5">
+                                    <table class="table table-borderless table-white">
+                                        <tbody>
+                                            @if ($data)
+                                            <tr>
+                                                <td><strong>First Name</strong></td>
+                                                <td>: {{ $data->firstName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Last Name</strong></td>
+                                                <td>: {{ $data->lastName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Address</strong></td>
+                                                <td>: {{ $data->address }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Date Of Birth</strong></td>
+                                                <td>: {{ $data->dateOfBirth }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Email</strong></td>
+                                                <td>: {{ $data->email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Gender</strong></td>
+                                                <td>: {{ $data->gender }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Religion</strong></td>
+                                                <td>: {{ $data->religion }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Status</strong></td>
+                                                <td>: {{ $data->status }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Job</strong></td>
+                                                <td>: {{ $data->job }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Terms</strong></td>
+                                                <td>: {{ $data->terms }}</td>
+                                            </tr>
+                                            @else
+                                            <tr>
+                                                <td colspan="2">Data Not Found</td>
+                                            </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <a href="/HasilForm" class="btn btn-danger">Kembali</a>
                     </div>
                 </div>
             </div>

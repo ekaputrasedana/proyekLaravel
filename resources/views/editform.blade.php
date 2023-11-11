@@ -44,138 +44,102 @@
                 <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-6">
                     <div class="col-lg-6 px-xl-10">
                         <h3 class="h2 text-black mb-0">EDIT FORMULIR</h3><br>
-                        <?php
-                        include 'koneksidb.php';
-
-                        if (isset($_GET['id'])) {
-                            $id = $_GET['id'];
-                            $sql = "SELECT * FROM data_formulir WHERE id = $id";
-                            $result = $conn->query($sql);}
-
-                            if ($result->num_rows > 0) {
-                                $row = $result->fetch_assoc();}
-                        ?>
-                        <div class="row center-content-center mb-5">
-                            <div class="col-md-6">
-                                <!-- <div class="alert alert-dark alert-dismissible fade show d-none my-alert" role="alert">
-                            <strong>Thank You!</strong> I have received your message.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div> -->
-                                <form method="post" action="update.php" name="submit-to-google-sheet">
-                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                        <div class="row justify-content-center mb-5">
+                            <div class="col-md-50">
+                            <div class="container mt-5">
+                                <form method="post" action="/UpdatePersonData" name="submit-to-google-sheet">
+                                    @csrf
+                                    @method('PUT')
                                     <div class="col-12">
                                         <label for="inputFirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" name="inputFirstName"
-                                            id="inputFirstName" value="<?php echo $row['First_Name']; ?>">
+                                        <input type="text" class="form-control" name="inputFirstName" id="inputFirstName"
+                                            value="{{ $data->firstName }}" />
                                     </div>
                                     <div class="col-12">
                                         <label for="inputLastName" class="form-label">Last Name</label>
                                         <input type="text" class="form-control" name="inputLastName" id="inputLastName"
-                                            value="<?php echo $row['Last_Name']; ?>">
+                                        value="{{ $data->lastName }}" />
                                     </div>
                                     <div class="col-12">
                                         <label for="inputAddress" class="form-label">Address</label>
                                         <input type="text" class="form-control" name="inputAddress" id="inputAddress"
-                                            value="<?php echo $row['Address']; ?>">
+                                        value="{{ $data->Address }}" />
                                     </div>
                                     <div class="col-12">
                                         <label for="inputDateOfBirth" class="form-label">Date Of Birth</label>
-                                        <input type="date" class="form-control" name="inputDateOfBirth"
-                                            id="inputDateOfBirth" value="<?php echo $row['Date_Of_Birth']; ?>">
+                                        <input type="date" class="form-control" name="inputDateOfBirth" id="inputDateOfBirth"
+                                        value="{{ $data->dateOfBirth }}" />
                                     </div>
                                     <div class="col-12">
                                         <label for="inputEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="inputEmail" id="inputEmail"
-                                            value="<?php echo $row['Email']; ?>">
+                                        <input type="email" class="form-control" name="inputEmail" id="inputEmail" value="{{ $data->email }}" />
                                     </div>
                                     <div>
                                         <div>
                                             <label for="inputGender" class="form-label">Gender</label>
                                         </div>
                                         <div class="mb-2 mb-xl-3 display-28 radio-group">
-                                            <input type="radio" id="Male" name="inputGender" value="Male" required
-                                                <?php echo ($row['Gender'] === 'Male') ? 'checked' : ''; ?>>
+                                            <input type="radio" id="Male" name="inputGender" value="Male" @if ( $data -> gender == 'Male') {{ "checked" }} @endif required>
                                             <label for="Male">Male</label>
-                                            <input type="radio" id="Female" name="inputGender" value="Female" required
-                                                <?php echo ($row['Gender'] === 'Female') ? 'checked' : ''; ?>>>
+                                            <input type="radio" id="Female" name="inputGender" value="Female" @if ( $data -> gender == 'Female') {{ "checked" }} @endif required>
                                             <label for="Female">Female</label>
-                                            <input type="radio" id="Others" name="inputGender" value="Others" required
-                                                <?php echo ($row['Gender'] === 'Others') ? 'checked' : ''; ?>>>
+                                            <input type="radio" id="Others" name="inputGender" value="Others" @if ( $data -> gender == 'Others') {{ "checked" }} @endif required>
                                             <label for="Others">Others</label>
                                         </div>
-
+        
                                         <div class="col-12">
                                             <label for="inputReligion" class="form-label">Religion</label>
-                                            <select name="inputReligion" id="inputReligion" class="form-select"
-                                                required>
+                                            <select name="inputReligion" id="inputReligion" class="form-select" required>
                                                 <option selected>Choose..</option>
-                                                <option>Hindu
-                                                    <?php echo ($row['Religion'] === 'Hindu') ? 'selected' : ''; ?>
-                                                </option>
-                                                <option>Islam
-                                                    <?php echo ($row['Religion'] === 'Islam') ? 'selected' : ''; ?>
-                                                </option>
-                                                <option>Kristen
-                                                    <?php echo ($row['Religion'] === 'Kristen') ? 'selected' : ''; ?>
-                                                </option>
-                                                <option>Buddha
-                                                    <?php echo ($row['Religion'] === 'Buddha') ? 'selected' : ''; ?>
-                                                </option>
-                                                <option>Katolik
-                                                    <?php echo ($row['Religion'] === 'Katolik') ? 'selected' : ''; ?>
-                                                </option>
+                                                <option>Hindu</option>
+                                                <option>Islam</option>
+                                                <option>Kristen</option>
+                                                <option>Buddha</option>
+                                                <option>Katolik</option>
                                             </select>
                                         </div>
                                         <div>
                                             <label for="inputState" class="form-label">Status</label>
                                         </div>
                                         <div class="mb-2 mb-xl-3 display-28 radio-group">
-                                            <input type="radio" id="Married" name="inputState" value="Married" required
-                                                <?php echo ($row['Status'] === 'Married') ? 'checked' : ''; ?>>
+                                            <input type="radio" id="Married" name="inputState" value="Married" @if ( $data -> status == 'Married') {{ "checked" }} @endif required>
                                             <label for="Married">Married</label>
-                                            <input type="radio" id="NotMarried" name="inputState" value="NotMarried"
-                                                required
-                                                <?php echo ($row['Status'] === 'NotMarried') ? 'checked' : ''; ?>>
+                                            <input type="radio" id="NotMarried" name="inputState" value="NotMarried" @if ( $data -> status == 'NotMarried') {{ "checked" }} @endif required>
                                             <label for="NotMarried">Not Married</label>
-                                            <input type="radio" id="Other" name="inputState" value="Other" required
-                                                <?php echo ($row['Status'] === 'Other') ? 'checked' : ''; ?>>
+                                            <input type="radio" id="Other" name="inputState" value="Other" @if ( $data -> status == 'Other') {{ "checked" }} @endif required>
                                             <label for="Other">Others</label>
                                         </div>
                                         <div>
                                             <label for="inputjob" class="form-label">Current Job</label>
                                         </div>
                                         <div class="mb-2 mb-xl-3 display-28 checkbox-group">
-                                            <input type="checkbox" id="Student" name="inputjob" value="Student"
-                                                <?php echo ($row['Current_Job'] === 'Student') ? 'checked' : ''; ?>>
+                                            <input type="checkbox" id="Student" name="inputjob" value="Student" @if ( $data -> job == 'Student') {{ "checked" }} @endif required>
                                             <label for="Student">Student</label>
-                                            <input type="checkbox" id="Goverment" name="inputjob" value="Goverment"
-                                                <?php echo ($row['Current_Job'] === 'Goverment') ? 'checked' : ''; ?>>
+                                            <input type="checkbox" id="Goverment" name="inputjob" value="Goverment" @if ( $data -> job == 'Goverment') {{ "checked" }} @endif required>
                                             <label for="Goverment">Goverment</label>
-                                            <input type="checkbox" id="Private" name="inputjob" value="Student"
-                                                <?php echo ($row['Current_Job'] === 'Private') ? 'checked' : ''; ?>>
+                                            <input type="checkbox" id="Private" name="inputjob" value="Private" @if ( $data -> job == 'Private') {{ "checked" }} @endif required>
                                             <label for="Private">Private</label>
-                                            <input type="checkbox" id="others" name="inputjob" value="Student"
-                                                <?php echo ($row['Current_Job'] === 'others') ? 'checked' : ''; ?>>
+                                            <input type="checkbox" id="others" name="inputjob" value="others" @if ( $data -> job == 'others') {{ "checked" }} @endif required>
                                             <label for="others">Others</label>
                                         </div>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" name="inputPersonalTerms"
-                                                id="inputPersonalTerms" required>
-                                            <label class="form-check-label" for="inputPersonalTerms">I Agree with
-                                                personal
+                                                id="inputPersonalTerms" @if ( $data -> terms == 'on') {{ "checked" }} @endif required>
+                                            <label class="form-check-label" for="inputPersonalTerms">I Agree with personal
                                                 terms</label>
                                         </div>
                                         <div>
-                                            <button class="w-100 btn btn-primary btn-kirim"
-                                                type="submit">Update</button>
-                                        </div>
-
-                                </form>
+                                            <button class="w-100 btn btn-primary btn-kirim" type="submit">Submit</button>
+                                        </div>                            
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
 
 </body>
