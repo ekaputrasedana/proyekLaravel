@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('address');
             $table->date('dateOfBirth');
             $table->string('email');
-            $table->enum('gender',['Male', 'Female'])->default('Male');
+            $table->enum('gender',['Male', 'Female', 'Others'])->default('Male');
             $table->string('religion')->default('Hindu');
             $table->string('status')->default('Not Married');
             $table->string('job')->default('Student');
